@@ -1,0 +1,30 @@
+
+version: "2.0"
+
+services:
+  backend:
+    build: .
+    volumes:
+      - ./:/home/app/backend
+      - /home/app/backend/node_modules
+    depends_on:
+      - postgres
+    ports:
+      - 8080:8080
+    environment:
+      - PORT=8080
+
+  postgres:
+    container_name: 'postgres'
+    image: 'mdillon/postgis:9.5'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_USER=user
+      - POSTGRES_DB=gre
+
+volumes:
+  postgres: {}
